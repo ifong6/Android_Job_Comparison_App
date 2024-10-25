@@ -1,0 +1,126 @@
+digraph G {
+  
+  subgraph cluster_0 {
+    //style=filled;
+    //color=lightgrey;
+    node [shape=box];
+
+    AppManager
+    
+    Comparator->JobScoreComparator[style=dashed, label="Implements"];
+    JobScoreComparator->ClassJob[style=solid, label="Uses"];
+
+    Storage->AppManager [style=dashed, arrowhead=diamond, label="1"];
+
+    ClassComparisonSettings->AppManager [style=dashed, arrowhead=diamond, label="1"];
+    ClassComparisonSettings->Storage [style=dashed, arrowhead=diamond, label="1"];
+    ClassJob->AppManager [style=dashed, arrowhead=diamond, label="0..*"];
+    ClassJob->Storage [style=dashed, arrowhead=diamond, label="0..*"];
+    
+    UserStateEnum->AppManager [style=dashed, arrowhead=diamond, label="1"];
+    
+    
+    label = "Class Diagram";
+  }
+  
+  Comparator 
+  [label=< &laquo;interface&raquo;<BR ALIGN="LEFT"/>
+  <B>Comparator</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  + compareTo(other: Object) : <i>int</i><BR ALIGN="LEFT"/>
+  >]
+
+  JobScoreComparator 
+  [label=<<B>JobScoreComparator</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  + compareTo(job1: Job, job2: Job) : <i>int</i><BR ALIGN="LEFT"/>
+  >]
+
+
+
+  ClassJob 
+  [label=< &laquo;class&raquo;<BR ALIGN="LEFT"/>
+  <B>Job</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  - title: <i>String</i><BR ALIGN="LEFT"/>
+  - company: <i>String</i><BR ALIGN="LEFT"/>
+  - locationCity: <i>String</i><BR ALIGN="LEFT"/>
+  - locationState: <i>String</i><BR ALIGN="LEFT"/>
+  - costOfLiving: <i>int</i><BR ALIGN="LEFT"/>
+  - yearlySalary: <i>float</i><BR ALIGN="LEFT"/>
+  - yearlyBonus: <i>float</i><BR ALIGN="LEFT"/>
+  - trainingDevFund: <i>float</i><BR ALIGN="LEFT"/>
+  - leaveTime: <i>int</i><BR ALIGN="LEFT"/>
+  - teleworkDays: <i>int</i><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  + getRank() : <i>float</i><BR ALIGN="LEFT"/>
+  >]
+
+  ClassComparisonSettings 
+  [label=< &laquo;class&raquo;<BR ALIGN="LEFT"/>
+  <B>ComparisonSettings</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  - isWeightsAssigned: <i>boolean</i><BR ALIGN="LEFT"/>
+  - yearlySalary: <i>int</i><BR ALIGN="LEFT"/>
+  - yearlyBonus: <i>int</i><BR ALIGN="LEFT"/>
+  - trainingDevFund: <i>int</i><BR ALIGN="LEFT"/>
+  - leaveTime: <i>int</i><BR ALIGN="LEFT"/>
+  - teleworkDays: <i>int</i><BR ALIGN="LEFT"/>
+  >]
+  
+
+  Storage 
+  [label=< &laquo;class&raquo;<BR ALIGN="LEFT"/>
+  <B>Storage</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  - jobCurrent: <i>Job</i><BR ALIGN="LEFT"/>
+  - jobOffers: <i>Job[0...*]</i><BR ALIGN="LEFT"/>
+  - compareSettings: <i>ComparisonSettings</i><BR ALIGN="LEFT"/>
+  - compareJobIndex1:  <i>int</i><BR ALIGN="LEFT"/>
+  - compareJobIndex2:  <i>int</i><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  + initialize() : <i>boolean</i><BR ALIGN="LEFT"/>
+  + addJobOffer(Job) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + getJobOffer(int) : <i>Job</i><BR ALIGN="LEFT"/>
+  + getCurrentJob() : <i>Job</i><BR ALIGN="LEFT"/>
+  + setCurrentJob(Job) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + getCompareSettings() : <i>ComparisonSettings</i><BR ALIGN="LEFT"/>
+  + setCompareSettings(ComparisonSettings) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + selectTwoJobs(int, int) : <i>boolean</i><BR ALIGN="LEFT"/>
+  >]
+  
+  AppManager 
+  [label=< &laquo;class&raquo;<BR ALIGN="LEFT"/>
+  <B>AppManager</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  - storage: <i>Storage</i><BR ALIGN="LEFT"/>
+  - userState:  <i>UserStateEnum</i><BR ALIGN="LEFT"/>
+  - jobCurrent: <i>Job</i><BR ALIGN="LEFT"/>
+  - jobOffers: <i>Job[0...*]</i><BR ALIGN="LEFT"/>
+  - compareSettings: <i>ComparisonSettings</i><BR ALIGN="LEFT"/>
+  - compareJobIndex1:  <i>int</i><BR ALIGN="LEFT"/>
+  - compareJobIndex2:  <i>int</i><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  + initialize() : <i>boolean</i><BR ALIGN="LEFT"/>
+  + enterState(UserStateEnum) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + addJobOffer(Job) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + editCurrentJob(Job) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + editComparisonSettings() : <i>boolean</i><BR ALIGN="LEFT"/>
+  + selectTwoJobs(int, int) : <i>boolean</i><BR ALIGN="LEFT"/>
+  + sortJobs() : <i>boolean</i><BR ALIGN="LEFT"/>
+  >]
+  
+  UserStateEnum
+  [label=< &laquo;enumeration&raquo;<BR ALIGN="LEFT"/>
+  <B>UserStateEnum</B><BR ALIGN="LEFT"/>
+  ---------------------------<BR ALIGN="LEFT"/>
+  MainMenu<BR ALIGN="LEFT"/>
+  EditCurrentJob<BR ALIGN="LEFT"/>
+  NewJobOffer<BR ALIGN="LEFT"/>
+  EditJobOffer<BR ALIGN="LEFT"/>
+  EditComparisonSettings<BR ALIGN="LEFT"/>
+  SelectTwoJobs<BR ALIGN="LEFT"/>
+  CompareTwoJobs<BR ALIGN="LEFT"/>
+  >]
+  
+}
